@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	"github.com/bootdotdev/pokedex/internal/pokeapi"
+	"github.com/jmaconachie/pokedexcli/internal/pokeapi"
 )
 
 func main() {
@@ -11,6 +11,6 @@ func main() {
 	cfg := &config{
 		pokeapiClient: pokeClient,
 	}
-
+	cache := NewCache()
 	startRepl(cfg)
 }
