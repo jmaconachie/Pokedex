@@ -1,8 +1,13 @@
 package main
 
+import (
+	"net/http"
+)
+
 type Config struct {
-	Next     string
-	Previous string
+	httpClient http.Client
+	Next       *string
+	Previous   *string
 }
 
 type LocationList struct {
