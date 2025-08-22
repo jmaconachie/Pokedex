@@ -14,6 +14,7 @@ type config struct {
 	pokeapiClient    pokeapi.Client
 	nextLocationsURL *string
 	prevLocationsURL *string
+	pokedex          map[string]pokeapi.Pokemon
 }
 
 func startRepl(cfg *config, cache *pokecache.Cache) {
@@ -28,10 +29,11 @@ func startRepl(cfg *config, cache *pokecache.Cache) {
 		}
 
 		commandName := words[0]
+		args := words[1:]
 
 		command, exists := getCommands()[commandName]
 		if exists {
-			err := command.callback(cfg, cache)
+			err := command.callback(cfg, cache, args)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -52,7 +54,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config, *pokecache.Cache) error
+	callback    func(*config, *pokecache.Cache, []string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -76,6 +78,26 @@ func getCommands() map[string]cliCommand {
 			name:        "exit",
 			description: "Exit the Pokedex",
 			callback:    commandExit,
+		},
+		"explore": {
+			name:        "explore",
+			description: "Explore a location",
+			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Try to catch a pokemon",
+			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "Inspect a pokemon's stats",
+			callback:    commandInspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Inspect your collection of pokemon",
+			callback:    commandPokedex,
 		},
 	}
 }

@@ -8,7 +8,7 @@ import (
 	"github.com/jmaconachie/pokedexcli/internal/pokecache"
 )
 
-func commandMapf(cfg *config, cache *pokecache.Cache) error {
+func commandMapf(cfg *config, cache *pokecache.Cache, args []string) error {
 	locations := pokeapi.RespShallowLocations{}
 	var err error
 	if cfg.nextLocationsURL == nil {
@@ -35,7 +35,7 @@ func commandMapf(cfg *config, cache *pokecache.Cache) error {
 	return nil
 }
 
-func commandMapb(cfg *config, cache *pokecache.Cache) error {
+func commandMapb(cfg *config, cache *pokecache.Cache, args []string) error {
 	locations := pokeapi.RespShallowLocations{}
 	var err error
 	if cfg.prevLocationsURL == nil {
